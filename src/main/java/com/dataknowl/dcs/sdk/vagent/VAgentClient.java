@@ -31,12 +31,16 @@ import com.dataknowl.dcs.sdk.http.HttpPostFace;
 import com.dataknowl.dcs.sdk.http.HttpResponseObj;
 import com.dataknowl.dcs.sdk.vagent.model.ConvSequenceResult;
 import com.dataknowl.dcs.sdk.vagent.model.ConvSequence;
+import com.dataknowl.dcs.sdk.vagent.model.ConvSequenceInput;
+import com.dataknowl.dcs.sdk.vagent.model.ConvSequenceReply;
 import com.dataknowl.dcs.sdk.vagent.model.Rid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -67,7 +71,7 @@ public class VAgentClient implements ServiceClient {
         this.region = region;
     }
 
-    public ConvSequenceResult processConvSequence(ConvSequence sequence) {
+    public ConvSequenceResult processConvSequence(ConvSequenceInput sequence) {
         
         // String method
         String resource = "/v1/vagent/{VAGNT}/conv/{VACNV}/sequence/process";
@@ -141,16 +145,20 @@ public class VAgentClient implements ServiceClient {
             Element replyE = processingE.getChild("reply");
 
             Element sequenceE = replyE.getChild("sequence");
+            
+            List<String> textList = new ArrayList<String>();
+            
+            List<Element> textL = replyE.getChildren("text");
+            
+            for(Element textE : textL) {
+                textList.add(textE.getTextTrim());
+            }
 
-            Element textE = sequenceE.getChild("text");
-
-            String text = textE.getTextTrim();
-
-            ConvSequence replySequence = new ConvSequence.ConvSequenceBuilder(new Rid(rid), text).build();
+            ConvSequenceReply replySequence = new ConvSequenceReply.ConvSequenceReplyBuilder(new Rid(rid), textList).build();
 
             r.setReplySequence(replySequence);
 
-            logger.debug("Text = {}", text);
+            logger.debug("Text = {}", textList);
 
         } catch (JDOMException e) {
             logger.error("Error while parsing XML", e);

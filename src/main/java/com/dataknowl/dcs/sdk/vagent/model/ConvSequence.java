@@ -27,48 +27,22 @@ package com.dataknowl.dcs.sdk.vagent.model;
  *
  * @author Complexity Intelligence, LLC
  */
-public class ConvSequence {
+public abstract class ConvSequence {
 
     // Resource ID
-    private final Rid rid;
-    // Text (required)
-    private final String text;
+    private Rid rid;
 
-    private ConvSequence(ConvSequenceBuilder builder) {
-        this.rid = builder.rid;
-        this.text = builder.text;
-    }
-    
+    /**
+     * @return the rid
+     */
     public Rid getRid() {
-        return (this.rid);
+        return rid;
     }
 
-    public String getText() {
-        return (this.text);
+    /**
+     * @param rid the rid to set
+     */
+    public void setRid(Rid rid) {
+        this.rid = rid;
     }
-
-    public static class ConvSequenceBuilder {
-
-        private final Rid rid;
-        
-        private final String text;
-
-        public ConvSequenceBuilder(Rid rid, String text) {
-            this.rid = rid;
-            this.text = text;
-        }
-        
-        //Return the finally constructed object
-        public ConvSequence build() {
-            ConvSequence user = new ConvSequence(this);
-            validateUserObject(user);
-            return user;
-        }
-        
-        private void validateUserObject(ConvSequence sequence) {
-            //Do some basic validations to check 
-            //if user object does not break any assumption of system
-        }        
-    }
-
 }

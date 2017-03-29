@@ -23,26 +23,48 @@
  */
 package com.dataknowl.dcs.sdk.vagent.model;
 
+import java.util.List;
+
 /**
  *
  * @author Complexity Intelligence, LLC
  */
-public class ConvSequenceResult {
-    
-    private ConvSequenceReply replySequence;
+public class ConvSequenceReply extends ConvSequence {
 
-    /**
-     * @return the replySequence
-     */
-    public ConvSequenceReply getReplySequence() {
-        return replySequence;
+    // Text (required)
+    private final List<String> textList;
+
+    private ConvSequenceReply(ConvSequenceReplyBuilder builder) {
+        super.setRid(builder.rid);
+        this.textList = builder.textList;
     }
 
-    /**
-     * @param replySequence the replySequence to set
-     */
-    public void setReplySequence(ConvSequenceReply replySequence) {
-        this.replySequence = replySequence;
+    public List<String> getTextList() {
+        return (this.textList);
     }
-    
+
+    public static class ConvSequenceReplyBuilder {
+
+        private final Rid rid;
+        
+        private final List<String> textList;
+
+        public ConvSequenceReplyBuilder(Rid rid, List<String> textList) {
+            this.rid = rid;
+            this.textList = textList;
+        }
+        
+        //Return the finally constructed object
+        public ConvSequenceReply build() {
+            ConvSequenceReply user = new ConvSequenceReply(this);
+            validateUserObject(user);
+            return user;
+        }
+        
+        private void validateUserObject(ConvSequenceReply sequence) {
+            //Do some basic validations to check 
+            //if user object does not break any assumption of system
+        }        
+    }
+
 }
