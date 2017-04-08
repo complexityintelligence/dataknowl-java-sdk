@@ -148,7 +148,7 @@ public class VAgentClient implements ServiceClient {
             
             List<String> textList = new ArrayList<String>();
             
-            List<Element> textL = replyE.getChildren("text");
+            List<Element> textL = sequenceE.getChildren("text");
             
             for(Element textE : textL) {
                 textList.add(textE.getTextTrim());
