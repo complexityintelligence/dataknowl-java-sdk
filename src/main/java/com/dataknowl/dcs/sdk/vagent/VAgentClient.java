@@ -30,7 +30,6 @@ import com.dataknowl.dcs.sdk.http.ClientHttpPostException;
 import com.dataknowl.dcs.sdk.http.HttpPostFace;
 import com.dataknowl.dcs.sdk.http.HttpResponseObj;
 import com.dataknowl.dcs.sdk.vagent.model.ConvSequenceResult;
-import com.dataknowl.dcs.sdk.vagent.model.ConvSequence;
 import com.dataknowl.dcs.sdk.vagent.model.ConvSequenceInput;
 import com.dataknowl.dcs.sdk.vagent.model.ConvSequenceReply;
 import com.dataknowl.dcs.sdk.vagent.model.Rid;
@@ -148,7 +147,7 @@ public class VAgentClient implements ServiceClient {
             
             List<String> textList = new ArrayList<String>();
             
-            List<Element> textL = replyE.getChildren("text");
+            List<Element> textL = sequenceE.getChildren("text");
             
             for(Element textE : textL) {
                 textList.add(textE.getTextTrim());
